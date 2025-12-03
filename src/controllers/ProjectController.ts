@@ -14,13 +14,23 @@ export class ProjectContorller {
             })
 
         } catch (error) {
-            res.status(400).send({
+            res.status(400).json({
                 message: "An error occurred while creating the project"
             });
         }
     }
 
+
     static getAllProjects = async (req: Request, res: Response) => {
-        res.status(200).json("All projects here")
+        try {
+            const projects = await Project.find({})
+
+            res.status(200).json(projects)
+
+        } catch (error) {
+            res.status(400).json({
+                message: "An error occurred while getting the projects"
+            });
+        }
     }
 }

@@ -28,7 +28,7 @@ export class ProjectContorller {
             return res.status(200).json(projects)
 
         } catch (error) {
-            res.status(400).json({
+            return res.status(400).json({
                 message: "An error occurred while getting the projects"
             })
         }
@@ -52,6 +52,30 @@ export class ProjectContorller {
         } catch (error) {
             return res.status(400).json({
                 message: "An error occurred while getting the project by ID"
+            })
+        }
+    }
+
+
+    static updateProject = async (req: Request, res: Response) => {
+        const { id } = req.params
+        
+        try {
+            const project = await Project.findByIdAndUpdate(id, req.body)
+
+            if (!project) {
+                return res.status(404).json({
+                    message: "Project Not Found"
+                })
+            }
+
+            return res.status(200).json({
+                message: "Project Successfully Updated"
+            })
+
+        } catch (error) {
+            return res.status(400).json({
+                message: "An error occurred while updating the project"
             })
         }
     }

@@ -11,3 +11,8 @@ export const createProjectValidationRules = [
 export const getProjectParamValidationRules = [
     param('id').isMongoId().withMessage('Invalid ID')
 ]
+
+export const updateProjectValidationRules = [
+    ...getProjectParamValidationRules,
+    ...createProjectValidationRules
+]

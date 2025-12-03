@@ -10,6 +10,7 @@ router.post('/', createProjectValidationRules, handleValidationErrors, ProjectCo
 router.get('/', ProjectContorller.getAllProjects)
 router.get('/:id', getProjectParamValidationRules, handleValidationErrors, ProjectContorller.getProjectById)
 router.put('/:id', updateProjectValidationRules, handleValidationErrors, ProjectContorller.updateProject)
+router.delete('/:id', getProjectParamValidationRules, handleValidationErrors, ProjectContorller.deleteProject)
 
 
 export default router

@@ -79,4 +79,30 @@ export class ProjectContorller {
             })
         }
     }
+
+
+    static deleteProject = async (req: Request, res: Response) => {
+        const { id } = req.params
+        
+        try {
+            const project = await Project.findById(id)
+
+            if (!project) {
+                return res.status(404).json({
+                    message: "Project Not Found"
+                })
+            }
+
+            await project.deleteOne()
+
+            return res.status(200).json({
+                message: "Project Deleted"
+            })
+
+        } catch (error) {
+            return res.status(400).json({
+                message: "An error occurred while deleting the project"
+            })
+        }
+    }
 }

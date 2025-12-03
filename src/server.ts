@@ -14,6 +14,12 @@ dbConnection()
 const app = express()
 
 
+// Middlewares (configuration to convert data from body to JSON)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+
+
 // Routes Setup
 app.use("/api/projects", projectRoutes)
 

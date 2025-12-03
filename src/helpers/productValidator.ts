@@ -7,3 +7,7 @@ export const createProjectValidationRules = [
 
     body('description').notEmpty().withMessage('The Project Description is Required')
 ]
+
+export const getProjectParamValidationRules = [
+    param('id').isMongoId().withMessage('Invalid ID')
+]

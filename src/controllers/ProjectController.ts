@@ -4,6 +4,7 @@ import Project from "../models/Project"
 export class ProjectContorller {
 
     static createProject = async (req: Request, res: Response) => {
+        
         const project = new Project(req.body)
 
         try {
@@ -36,6 +37,7 @@ export class ProjectContorller {
 
 
     static getProjectById = async (req: Request, res: Response) => {
+
         const { id } = req.params
         
         try {
@@ -58,6 +60,7 @@ export class ProjectContorller {
 
 
     static updateProject = async (req: Request, res: Response) => {
+
         const { id } = req.params
         
         try {
@@ -82,6 +85,7 @@ export class ProjectContorller {
 
 
     static deleteProject = async (req: Request, res: Response) => {
+
         const { id } = req.params
         
         try {

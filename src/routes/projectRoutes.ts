@@ -1,16 +1,16 @@
 import { Router } from "express"
 import { ProjectContorller } from "../controllers/ProjectController"
-import { createProjectValidationRules, getProjectParamValidationRules, updateProjectValidationRules } from "../helpers/productValidator"
+import { projectBodyValidationRules, projectParamsValidationRules, projectParamsAndBodyValidationRules } from "../helpers/productValidator"
 import { handleValidationErrors } from "../middlewares/validation"
 
 const router = Router()
 
-// Routing
-router.post('/', createProjectValidationRules, handleValidationErrors, ProjectContorller.createProject)
+// Routes
+router.post('/', projectBodyValidationRules, handleValidationErrors, ProjectContorller.createProject)
 router.get('/', ProjectContorller.getAllProjects)
-router.get('/:id', getProjectParamValidationRules, handleValidationErrors, ProjectContorller.getProjectById)
-router.put('/:id', updateProjectValidationRules, handleValidationErrors, ProjectContorller.updateProject)
-router.delete('/:id', getProjectParamValidationRules, handleValidationErrors, ProjectContorller.deleteProject)
+router.get('/:id', projectParamsValidationRules, handleValidationErrors, ProjectContorller.getProjectById)
+router.put('/:id', projectParamsAndBodyValidationRules, handleValidationErrors, ProjectContorller.updateProject)
+router.delete('/:id', projectParamsValidationRules, handleValidationErrors, ProjectContorller.deleteProject)
 
 
 export default router

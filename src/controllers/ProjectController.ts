@@ -4,7 +4,7 @@ import Project from "../models/Project"
 export class ProjectContorller {
 
     static createProject = async (req: Request, res: Response) => {
-        
+
         const project = new Project(req.body)
 
         try {
@@ -15,7 +15,7 @@ export class ProjectContorller {
             })
 
         } catch (error) {
-            return res.status(400).json({
+            return res.status(500).json({
                 message: "An error occurred while creating the project"
             })
         }
@@ -29,7 +29,7 @@ export class ProjectContorller {
             return res.status(200).json(projects)
 
         } catch (error) {
-            return res.status(400).json({
+            return res.status(500).json({
                 message: "An error occurred while getting the projects"
             })
         }
@@ -52,7 +52,7 @@ export class ProjectContorller {
             return res.status(200).json(project)
 
         } catch (error) {
-            return res.status(400).json({
+            return res.status(500).json({
                 message: "An error occurred while getting the project by ID"
             })
         }
@@ -77,7 +77,7 @@ export class ProjectContorller {
             })
 
         } catch (error) {
-            return res.status(400).json({
+            return res.status(500).json({
                 message: "An error occurred while updating the project"
             })
         }
@@ -104,7 +104,7 @@ export class ProjectContorller {
             })
 
         } catch (error) {
-            return res.status(400).json({
+            return res.status(500).json({
                 message: "An error occurred while deleting the project"
             })
         }

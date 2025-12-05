@@ -4,10 +4,8 @@ import Project from "../models/Project"
 export class ProjectContorller {
 
     static createProject = async (req: Request, res: Response) => {
-
-        const project = new Project(req.body)
-
         try {
+            const project = new Project(req.body)
             await project.save()
 
             return res.status(201).json({
@@ -37,10 +35,8 @@ export class ProjectContorller {
 
 
     static getProjectById = async (req: Request, res: Response) => {
-
-        const { id } = req.params
-        
         try {
+            const { id } = req.params
             const project = await Project.findById(id)
 
             if (!project) {
@@ -60,11 +56,9 @@ export class ProjectContorller {
 
 
     static updateProject = async (req: Request, res: Response) => {
-
-        const { id } = req.params
-        
         try {
-            const project = await Project.findByIdAndUpdate(id, req.body)
+            const { id } = req.params
+            const project = await Project.findByIdAndUpdate(id, req.body, { runValidators: true })
 
             if (!project) {
                 return res.status(404).json({
@@ -85,10 +79,8 @@ export class ProjectContorller {
 
 
     static deleteProject = async (req: Request, res: Response) => {
-
-        const { id } = req.params
-        
         try {
+            const { id } = req.params
             const project = await Project.findById(id)
 
             if (!project) {

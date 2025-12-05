@@ -8,11 +8,11 @@ export const projectBodyValidationRules = [
     body('description').notEmpty().withMessage('The Project Description is Required')
 ]
 
-export const projectIdParamValidationRule = [
+export const projectIdValidationRule = [
     param('id').isMongoId().withMessage('Invalid ID')
 ]
 
-export const projectParamsAndBodyValidationRules = [
-    ...projectIdParamValidationRule,
+export const updateProjectValidationRules = [
+    ...projectIdValidationRule,
     ...projectBodyValidationRules
 ]

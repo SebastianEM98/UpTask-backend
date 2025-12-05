@@ -6,11 +6,16 @@ export const taskBodyValidationRules = [
     body('description').notEmpty().withMessage('The Task Description is Required')
 ]
 
-export const taskParamsValidationRules = [
-    param('projectId').isMongoId().withMessage('Invalid ID')
+export const projectIdParamValidationRule = [
+    param('projectId').isMongoId().withMessage('Invalid Project ID')
+]
+
+export const taskIdParamsValidationRules = [
+    ...projectIdParamValidationRule,
+    param('taskId').isMongoId().withMessage('Invalid Task ID')
 ]
 
 export const taskParamsAndBodyValidationRules = [
-    ...taskParamsValidationRules,
+    ...projectIdParamValidationRule,
     ...taskBodyValidationRules
 ]

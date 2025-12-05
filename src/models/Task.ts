@@ -40,5 +40,9 @@ export const TaskSchema: Schema = new Schema({
     }
 }, { timestamps: true })
 
+// Hides the __v in responses (remains on database)
+TaskSchema.set("toJSON", { versionKey: false })
+TaskSchema.set("toObject", { versionKey: false })
+
 const Task = model<ITask>("Task", TaskSchema)
 export default Task

@@ -25,13 +25,35 @@ export class TaskController {
 
     static getProjectTasks = async (req: Request, res: Response) => {
         try {
-            const projectTasks = await Task.find({ project: req.project._id }).populate('project', '-__v')
+            const projectTasks = await Task.find({ project: req.project._id }).populate('project')
 
             return res.status(200).json(projectTasks)
 
         } catch (error) {
             return res.status(500).json({
                 message: "An error occurred while getting the project tasks",
+                error
+            })
+        }
+    }
+
+
+    static getTasksById = async (req: Request, res: Response) => {
+        try {
+            const { taskId } = req.params
+            const task = await Task.findOne({_id: taskId, project: req.project._id})
+
+            if (!task) {
+                return res.status(404).json({
+                    message: "Task Not Found"
+                })
+            }
+
+            return res.status(200).json(task)
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while getting the task",
                 error
             })
         }

@@ -24,5 +24,9 @@ const ProjectSchema: Schema = new Schema({
     }
 }, { timestamps: true })
 
+// Hides the __v in responses (remains on database)
+ProjectSchema.set("toJSON", { versionKey: false })
+ProjectSchema.set("toObject", { versionKey: false })
+
 const Project = model<IProject>("Project", ProjectSchema)
 export default Project

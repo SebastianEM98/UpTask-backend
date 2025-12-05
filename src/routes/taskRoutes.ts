@@ -1,17 +1,19 @@
 import { Router } from "express"
 import { TaskController } from "../controllers/TaskController"
-import { createTaskValidationRules, projectIdValidationRule, IdsParamsValidationRules, updateTaskValidationRules } from "../helpers/taskValidator"
+import { createTaskValidationRules, projectIdValidationRule, IdsParamsValidationRules, updateTaskValidationRules, updateTaskStatusValidationRules } from "../helpers/taskValidator"
 import { handleValidationErrors } from "../middlewares/validation"
-import { validateProjectExists } from "../middlewares/project"
+import { projectExists } from "../middlewares/projectExists"
+import { taskExists } from "../middlewares/taskExists"
 
 const router = Router()
 
 // Routes
-router.post('/:projectId/tasks', createTaskValidationRules, handleValidationErrors, validateProjectExists, TaskController.createTask)
-router.get('/:projectId/tasks', projectIdValidationRule, handleValidationErrors, validateProjectExists, TaskController.getProjectTasks)
-router.get('/:projectId/tasks/:taskId', IdsParamsValidationRules, handleValidationErrors, validateProjectExists, TaskController.getTasksById)
-router.put('/:projectId/tasks/:taskId', updateTaskValidationRules, handleValidationErrors, validateProjectExists, TaskController.updateTask)
-router.delete('/:projectId/tasks/:taskId', IdsParamsValidationRules, handleValidationErrors, validateProjectExists, TaskController.deleteTask)
+router.post('/:projectId/tasks', createTaskValidationRules, handleValidationErrors, projectExists, TaskController.createTask)
+router.get('/:projectId/tasks', projectIdValidationRule, handleValidationErrors, projectExists, TaskController.getProjectTasks)
+router.get('/:projectId/tasks/:taskId', IdsParamsValidationRules, handleValidationErrors, projectExists, taskExists, TaskController.getTasksById)
+router.put('/:projectId/tasks/:taskId', updateTaskValidationRules, handleValidationErrors, projectExists, taskExists, TaskController.updateTask)
+router.delete('/:projectId/tasks/:taskId', IdsParamsValidationRules, handleValidationErrors, projectExists, taskExists, TaskController.deleteTask)
+router.post('/:projectId/tasks/:taskId/status', updateTaskStatusValidationRules, handleValidationErrors, projectExists, taskExists, TaskController.updateStatus)
 
 
 export default router

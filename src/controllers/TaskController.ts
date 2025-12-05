@@ -15,8 +15,7 @@ export class TaskController {
 
         } catch (error) {
             return res.status(500).json({
-                message: "An error occurred while creating the task",
-                error
+                message: "An error occurred while creating the task"
             })
         }
     }
@@ -30,8 +29,7 @@ export class TaskController {
 
         } catch (error) {
             return res.status(500).json({
-                message: "An error occurred while getting the project tasks",
-                error
+                message: "An error occurred while getting the project tasks"
             })
         }
     }
@@ -39,21 +37,10 @@ export class TaskController {
 
     static getTasksById = async (req: Request, res: Response) => {
         try {
-            const { taskId } = req.params
-            const task = await Task.findOne({ _id: taskId, project: req.project._id })
-
-            if (!task) {
-                return res.status(404).json({
-                    message: "Task Not Found"
-                })
-            }
-
-            return res.status(200).json(task)
-
+            return res.status(200).json(req.task)
         } catch (error) {
             return res.status(500).json({
-                message: "An error occurred while getting the task",
-                error
+                message: "An error occurred while getting the task"
             })
         }
     }
@@ -61,14 +48,8 @@ export class TaskController {
 
     static updateTask = async (req: Request, res: Response) => {
         try {
-            const { taskId } = req.params
-            const task = await Task.findOneAndUpdate({ _id: taskId, project: req.project._id }, req.body, { runValidators: true })
-
-            if (!task) {
-                return res.status(404).json({
-                    message: "Task Not Found"
-                })
-            }
+            const task = req.task
+            await task.updateOne(req.body)
 
             return res.status(200).json({
                 message: "Task Successfully Updated"
@@ -84,15 +65,7 @@ export class TaskController {
 
     static deleteTask = async (req: Request, res: Response) => {
         try {
-            const { taskId } = req.params
-            const task = await Task.findOne({ _id: taskId, project: req.project._id })
-
-            if (!task) {
-                return res.status(404).json({
-                    message: "Task Not Found"
-                })
-            }
-
+            const task = req.task
             await task.deleteOne()
 
             return res.status(200).json({
@@ -101,8 +74,27 @@ export class TaskController {
 
         } catch (error) {
             return res.status(500).json({
-                message: "An error occurred while deleting the task",
-                error
+                message: "An error occurred while deleting the task"
+            })
+        }
+    }
+
+
+    static updateStatus = async (req: Request, res: Response) => {
+        try {
+            const task = req.task
+            const { status } = req.body
+
+            task.status = status
+            await task.save()
+
+            return res.status(200).json({
+                message: "Task Status Successfully Updated"
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while updating the task's status"
             })
         }
     }

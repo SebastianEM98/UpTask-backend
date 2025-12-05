@@ -24,3 +24,8 @@ export const updateTaskValidationRules = [
     ...IdsParamsValidationRules,
     ...taskBodyValidationRules
 ]
+
+export const updateTaskStatusValidationRules = [
+    ...IdsParamsValidationRules,
+    body('status').notEmpty().withMessage('The Task Status is Required')
+]

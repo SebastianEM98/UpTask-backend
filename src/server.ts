@@ -1,8 +1,11 @@
 import express from "express"
 import dotenv from "dotenv"
-import { dbConnection } from "./database/dbConnection"
+import cors from "cors"
+import { dbConnection } from "./config/dbConnection"
+import { corsOptions } from "./config/cors"
 import projectRoutes from "./routes/projectRoutes"
 import taskRoutes from "./routes/taskRoutes"
+import { corsErrorHandler } from "./middlewares/corsErrorHandler"
 
 
 // Dotenv setup
@@ -12,8 +15,13 @@ dotenv.config()
 // Data Base Connection
 dbConnection()
 
-// Server Creation
+
+// Express Instance
 const app = express()
+
+
+// CORS Setup
+app.use(cors(corsOptions))
 
 
 // Middlewares (configuration to convert data from body to JSON)
@@ -21,10 +29,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-
 // Routes Setup
 app.use("/api/projects", projectRoutes)
 app.use("/api/projects", taskRoutes)
+
+
+// CORS Error Handler Middleware
+app.use(corsErrorHandler)
 
 
 export default app

@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
+import morgan from "morgan"
 import { dbConnection } from "./config/dbConnection"
 import { corsOptions } from "./config/cors"
 import projectRoutes from "./routes/projectRoutes"
@@ -27,6 +28,10 @@ app.use(cors(corsOptions))
 // Middlewares (configuration to convert data from body to JSON)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+
+// Logging
+app.use(morgan('dev'))
 
 
 // Routes Setup

@@ -9,7 +9,7 @@ export const projectBodyValidationRules = [
 ]
 
 export const projectIdValidationRule = [
-    param('id').isMongoId().withMessage('Invalid ID')
+    param('id').isMongoId().withMessage('Invalid Project ID')
 ]
 
 export const updateProjectValidationRules = [

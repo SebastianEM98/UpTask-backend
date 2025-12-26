@@ -5,8 +5,8 @@ export const corsOptions: CorsOptions = {
         const whitelist = [process.env.FRONTEND_URL]
 
         // Allow Postman or tools without origin
-        if (!origin) {
-            return callback(null, true);
+        if (!origin && process.env.NODE_ENV === "development") {
+            whitelist.push(undefined)
         }
 
         if (whitelist.includes(origin)) {

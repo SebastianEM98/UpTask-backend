@@ -44,8 +44,35 @@ export class UserContorller {
 
         } catch (error) {
             return res.status(500).json({
-                message: "An error occurred while creating the user",
-                error
+                message: "An error occurred while creating the user"
+            })
+        }
+    }
+
+
+    static confirmAccount = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.params
+
+            const tokenExists = await Token.findOne({ token })
+
+            if (!tokenExists) {
+                return res.status(404).json({
+                    message: "Invalid Token"
+                })
+            }
+
+            const user = await User.findById(tokenExists.user)
+            user.confirmed = true
+
+            await Promise.allSettled([user.save(), tokenExists.deleteOne()])
+
+            return res.status(200).json({
+                message: "Account Confirmed",
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while confirming the account",
             })
         }
     }

@@ -7,6 +7,7 @@ const router = Router()
 
 // Routes
 router.post('/register', userBodyValidationRules, handleValidationErrors, UserContorller.register)
+router.post('/confirm-account/:token', UserContorller.confirmAccount)
 
 
 export default router

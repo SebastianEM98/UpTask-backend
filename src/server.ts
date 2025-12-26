@@ -38,7 +38,7 @@ app.use(morgan('dev'))
 // Routes Setup
 app.use("/api/projects", projectRoutes)
 app.use("/api/projects", taskRoutes)
-app.use("/api/user", userRoutes)
+app.use("/api/users", userRoutes)
 
 
 

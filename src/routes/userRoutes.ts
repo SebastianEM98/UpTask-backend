@@ -8,4 +8,5 @@ const router = Router()
 // Routes
 router.post('/register', userBodyValidationRules, handleValidationErrors, UserContorller.register)
 
+
 export default router

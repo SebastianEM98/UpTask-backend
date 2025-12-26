@@ -20,7 +20,8 @@ const UserSchema: Schema = new Schema({
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     confirmed: {
         type: Boolean,

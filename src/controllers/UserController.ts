@@ -1,9 +1,9 @@
 import type { Request, Response } from "express"
-import bcrypt from "bcrypt"
 import User from "../models/User"
 import Token from "../models/Token"
 import { generate6DigitToken } from "../utils/token"
 import { UserEmail } from "../emails/UserEmail"
+import { checkPassword, hashPassword } from "../utils/user"
 
 export class UserContorller {
 
@@ -21,8 +21,7 @@ export class UserContorller {
             }
 
             // Password Hash
-            const salt = await bcrypt.genSalt(10)
-            user.password = await bcrypt.hash(password, salt)
+            user.password = await hashPassword(password)
 
             // Generate Token
             const token = new Token()
@@ -73,6 +72,44 @@ export class UserContorller {
         } catch (error) {
             return res.status(500).json({
                 message: "An error occurred while confirming the account",
+            })
+        }
+    }
+
+
+    static login = async (req: Request, res: Response) => {
+        try {
+            const { email, password } = req.body
+
+            const user = await User.findOne({ email })
+
+            if (!user) {
+                return res.status(404).json({
+                    message: "Incorrect email or password"
+                })
+            }
+
+            const isValidPassword = await checkPassword(password, user.password)
+
+            if (!isValidPassword) {
+                return res.status(401).json({
+                    message: "Incorrect email or password"
+                })
+            }
+
+
+            if (!user.confirmed) {
+                return res.status(401).json({
+                    message: "Your account has not been confirmed yet",
+                })
+            }
+
+            return res.status(200).json({
+                message: "Logged In",
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while logging in",
             })
         }
     }

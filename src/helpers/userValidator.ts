@@ -1,7 +1,9 @@
 import { body, param } from "express-validator"
 
-export const userBodyValidationRules = [
+export const userRegisterValidationRules = [
     body('name').notEmpty().withMessage('The Name is Required'),
+
+    body('email').notEmpty().withMessage('The Email is Required'),
 
     body('email').isEmail().withMessage('Invalid Email'),
 
@@ -13,4 +15,12 @@ export const userBodyValidationRules = [
         }
         return true
     })
+]
+
+export const userLoginValidationRules = [
+    body('email').notEmpty().withMessage('The Email is Required'),
+
+    body('email').isEmail().withMessage('Invalid Email'),
+
+    body('password').notEmpty().withMessage('The Password is Required')
 ]

@@ -39,7 +39,7 @@ export class UserEmail {
                                                 Please confirm your account by clicking the button below.
                                             </p>
                                             <p style="margin: 30px 0;">
-                                                <a href="${process.env.FRONTEND_URL}/confirm-account/${user.token}"
+                                                <a href="${process.env.FRONTEND_URL}/auth/confirm-account/${user.token}"
                                                 style="display: inline-block; background-color: #ad46ff; color: #ffffff; text-decoration: none; font-size: 16px; padding: 12px 24px; border-radius: 5px; font-weight: bold;">
                                                 Confirm Account
                                                 </a>

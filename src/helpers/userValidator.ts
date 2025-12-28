@@ -1,11 +1,15 @@
 import { body, param } from "express-validator"
 
-export const userRegisterValidationRules = [
-    body('name').notEmpty().withMessage('The Name is Required'),
-
+export const userEmailValidationRules = [
     body('email').notEmpty().withMessage('The Email is Required'),
 
     body('email').isEmail().withMessage('Invalid Email'),
+]
+
+export const userRegisterValidationRules = [
+    ...userEmailValidationRules,
+    
+    body('name').notEmpty().withMessage('The Name is Required'),
 
     body('password').isLength({ min: 8 }).withMessage('The password is too short, minimum 8 characters'),
 
@@ -17,10 +21,9 @@ export const userRegisterValidationRules = [
     })
 ]
 
-export const userLoginValidationRules = [
-    body('email').notEmpty().withMessage('The Email is Required'),
 
-    body('email').isEmail().withMessage('Invalid Email'),
+export const userLoginValidationRules = [
+    ...userEmailValidationRules,
 
     body('password').notEmpty().withMessage('The Password is Required')
 ]

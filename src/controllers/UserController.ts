@@ -38,7 +38,7 @@ export class UserContorller {
             })
 
             return res.status(201).json({
-                message: "Account created. Check your email to confirm your account."
+                message: "Account created. Check your email to confirm your account"
             })
 
         } catch (error) {
@@ -201,6 +201,45 @@ export class UserContorller {
         } catch (error) {
             return res.status(500).json({
                 message: "An error occurred while validating the token",
+            })
+        }
+    }
+
+
+    static updatePasswordWithToken = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.params
+            const { password } = req.body
+
+            const tokenExists = await Token.findOne({ token })
+
+            if (!tokenExists) {
+                return res.status(404).json({
+                    message: "Invalid Token"
+                })
+            }
+
+            const user = await User.findById(tokenExists.user)
+
+            const isSamePassword = await checkPassword(password, user.password)
+
+            if (isSamePassword) {
+                return res.status(401).json({
+                    message: "The new password cannot be the same as the previous one"
+                })
+            }
+            
+            user.password = await hashPassword(password)
+
+            await Promise.allSettled([user.save(), tokenExists.deleteOne()])
+
+            return res.status(201).json({
+                message: "Password Successfully Updated"
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while reseting the password"
             })
         }
     }

@@ -28,14 +28,14 @@ export class UserContorller {
             token.token = generate6DigitToken()
             token.user = user._id
 
+            await Promise.allSettled([user.save(), token.save()])
+
             // Send Email
             UserEmail.sendConfirmationEmail({
                 email: user.email,
                 name: user.name,
                 token: token.token
             })
-
-            await Promise.allSettled([user.save(), token.save()])
 
             return res.status(201).json({
                 message: "Account created. Check your email to confirm your account."
@@ -137,13 +137,47 @@ export class UserContorller {
                     token: token.token
                 })
             }
-            
+
             return res.status(200).json({
                 message: "If an account with this email exists, a new confirmation link has been sent"
             })
         } catch (error) {
             return res.status(500).json({
                 message: "An error occurred while sending a new confirmation link"
+            })
+        }
+    }
+
+
+    static requestPasswordResetLink = async (req: Request, res: Response) => {
+        try {
+            const { email } = req.body
+
+            const user = await User.findOne({ email })
+
+            // If the user exists and it's NOT confirmed -> email is sent
+            if (user) {
+                // Generate Token
+                const token = new Token()
+                token.token = generate6DigitToken()
+                token.user = user._id
+
+                await token.save()
+
+                // Send Email
+                UserEmail.sendPasswordResetEmail({
+                    email: user.email,
+                    name: user.name,
+                    token: token.token
+                })
+            }
+
+            return res.status(200).json({
+                message: "If an account with this email exists, a link to reset your password has been sent"
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while sending a link to reset your password"
             })
         }
     }

@@ -10,6 +10,7 @@ router.post('/register', userRegisterValidationRules, handleValidationErrors, Us
 router.post('/confirm-account/:token', UserContorller.confirmAccount)
 router.post('/login', userLoginValidationRules, handleValidationErrors, UserContorller.login)
 router.post('/request-link', userEmailValidationRules, handleValidationErrors, UserContorller.requestConfirmationLink)
+router.post('/forgot-password', userEmailValidationRules, handleValidationErrors, UserContorller.requestPasswordResetLink)
 
 
 export default router

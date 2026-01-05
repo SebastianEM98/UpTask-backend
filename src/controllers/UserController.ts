@@ -181,4 +181,27 @@ export class UserContorller {
             })
         }
     }
+
+
+    static validateToken = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.params
+
+            const tokenExists = await Token.findOne({ token })
+
+            if (!tokenExists) {
+                return res.status(404).json({
+                    message: "Invalid Token"
+                })
+            }
+
+            return res.status(200).json({
+                message: "Valid token, set your new password",
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while validating the token",
+            })
+        }
+    }
 }

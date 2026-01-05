@@ -11,6 +11,7 @@ router.post('/confirm-account/:token', UserContorller.confirmAccount)
 router.post('/login', userLoginValidationRules, handleValidationErrors, UserContorller.login)
 router.post('/request-link', userEmailValidationRules, handleValidationErrors, UserContorller.requestConfirmationLink)
 router.post('/forgot-password', userEmailValidationRules, handleValidationErrors, UserContorller.requestPasswordResetLink)
+router.post('/validate-token/:token', UserContorller.validateToken)
 
 
 export default router

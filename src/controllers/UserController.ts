@@ -4,6 +4,7 @@ import Token from "../models/Token"
 import { generate6DigitToken } from "../utils/token"
 import { UserEmail } from "../emails/UserEmail"
 import { checkPassword, hashPassword } from "../utils/user"
+import { generateJWT } from "../utils/jwt"
 
 export class UserContorller {
 
@@ -104,9 +105,9 @@ export class UserContorller {
                 })
             }
 
-            return res.status(200).json({
-                message: "Logged In",
-            })
+            const token = generateJWT({ id: user._id })
+
+            return res.status(200).json(token)
         } catch (error) {
             return res.status(500).json({
                 message: "An error occurred while logging in",
@@ -228,7 +229,7 @@ export class UserContorller {
                     message: "The new password cannot be the same as the previous one"
                 })
             }
-            
+
             user.password = await hashPassword(password)
 
             await Promise.allSettled([user.save(), tokenExists.deleteOne()])

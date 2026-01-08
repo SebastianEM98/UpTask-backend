@@ -1,9 +1,11 @@
 import { Schema, Document, model } from "mongoose"
+import { Types } from "mongoose"
 
 export interface IProject extends Document {
     projectName: string
     clientName: string
     description: string
+    manager: Types.ObjectId
 }
 
 const ProjectSchema: Schema = new Schema({
@@ -21,7 +23,11 @@ const ProjectSchema: Schema = new Schema({
         type: String,
         trim: true,
         required: true
-    }
+    },
+    manager: {
+        type: Types.ObjectId,
+        ref: "User"
+    },
 }, { timestamps: true })
 
 // Hides the __v in responses (remains on database)

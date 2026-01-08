@@ -6,6 +6,10 @@ export class ProjectContorller {
     static createProject = async (req: Request, res: Response) => {
         try {
             const project = new Project(req.body)
+
+            // Asign manager
+            project.manager = req.user._id
+
             await project.save()
 
             return res.status(201).json({
@@ -22,7 +26,7 @@ export class ProjectContorller {
 
     static getAllProjects = async (req: Request, res: Response) => {
         try {
-            const projects = await Project.find({})
+            const projects = await Project.find({ manager: req.user._id })
 
             return res.status(200).json(projects)
 
@@ -42,6 +46,12 @@ export class ProjectContorller {
             if (!project) {
                 return res.status(404).json({
                     message: "Project Not Found"
+                })
+            }
+
+            if (project.manager.toString() !== req.user._id.toString()) {
+                return res.status(401).json({
+                    message: "Insufficient Permissions"
                 })
             }
 
@@ -66,6 +76,12 @@ export class ProjectContorller {
                 })
             }
 
+            if (project.manager.toString() !== req.user._id.toString()) {
+                return res.status(401).json({
+                    message: "Insufficient Permissions"
+                })
+            }
+
             return res.status(200).json({
                 message: "Project Successfully Updated"
             })
@@ -86,6 +102,12 @@ export class ProjectContorller {
             if (!project) {
                 return res.status(404).json({
                     message: "Project Not Found"
+                })
+            }
+
+            if (project.manager.toString() !== req.user._id.toString()) {
+                return res.status(401).json({
+                    message: "Insufficient Permissions"
                 })
             }
 

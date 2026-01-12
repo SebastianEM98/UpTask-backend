@@ -30,6 +30,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             
             if(user) {
                 req.user = user
+                next()
             } else {
                 return res.status(500).json({
                     message: "Invalid Token"
@@ -41,6 +42,4 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             message: "Invalid Token"
         })
     }
-
-    next()
 }

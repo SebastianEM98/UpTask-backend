@@ -2,6 +2,7 @@ import { Router } from "express"
 import { UserContorller } from "../controllers/UserController"
 import { userEmailValidationRules, userLoginValidationRules, userPasswordsValidationRules, userRegisterValidationRules } from "../helpers/userValidator"
 import { handleValidationErrors } from "../middlewares/validation"
+import { authenticate } from "../middlewares/auth"
 
 const router = Router()
 
@@ -13,6 +14,7 @@ router.post('/request-link', userEmailValidationRules, handleValidationErrors, U
 router.post('/forgot-password', userEmailValidationRules, handleValidationErrors, UserContorller.requestPasswordResetLink)
 router.post('/validate-token/:token', UserContorller.validateToken)
 router.post('/update-password/:token', userPasswordsValidationRules, handleValidationErrors, UserContorller.updatePasswordWithToken)
+router.get('/authenticated', authenticate, UserContorller.getAuthenticatedUser)
 
 
 export default router

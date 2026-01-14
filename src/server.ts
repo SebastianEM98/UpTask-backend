@@ -6,6 +6,7 @@ import { dbConnection } from "./config/dbConnection"
 import { corsOptions } from "./config/cors"
 import projectRoutes from "./routes/projectRoutes"
 import taskRoutes from "./routes/taskRoutes"
+import teamMemberRoutes from "./routes/teamMemberRoutes"
 import userRoutes from "./routes/userRoutes"
 import { corsErrorHandler } from "./middlewares/corsErrorHandler"
 
@@ -38,6 +39,7 @@ app.use(morgan('dev'))
 // Routes Setup
 app.use("/api/projects", projectRoutes)
 app.use("/api/projects", taskRoutes)
+app.use("/api/projects", teamMemberRoutes)
 app.use("/api/users", userRoutes)
 
 

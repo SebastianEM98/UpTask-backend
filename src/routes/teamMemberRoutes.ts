@@ -7,9 +7,9 @@ import { projectExists } from "../middlewares/projectExists"
 const router = Router()
 
 // Routes
-router.post('/:projectId/team/search', userEmailValidationRules, handleValidationErrors, projectExists, TeamMemberContorller.searchMemberByEmail)
-router.post('/:projectId/team/', userIdBodyValidationRule, handleValidationErrors, projectExists, TeamMemberContorller.addMemberById)
-router.delete('/:projectId/team/', userIdBodyValidationRule, handleValidationErrors, projectExists, TeamMemberContorller.RemoveMemberById)
-
+router.post('/:projectId/team/find', userEmailValidationRules, handleValidationErrors, projectExists, TeamMemberContorller.findMemberByEmail)
+router.get('/:projectId/team', projectExists, TeamMemberContorller.getProjectTeam)
+router.post('/:projectId/team', userIdBodyValidationRule, handleValidationErrors, projectExists, TeamMemberContorller.addMemberById)
+router.delete('/:projectId/team', userIdBodyValidationRule, handleValidationErrors, projectExists, TeamMemberContorller.RemoveMemberById)
 
 export default router

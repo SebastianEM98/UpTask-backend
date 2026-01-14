@@ -1,9 +1,10 @@
 import type { Request, Response } from "express"
 import User from "../models/User"
+import Project from "../models/Project"
 
 export class TeamMemberContorller {
 
-    static searchMemberByEmail = async (req: Request, res: Response) => {
+    static findMemberByEmail = async (req: Request, res: Response) => {
         try {
             const { email } = req.body
 
@@ -21,7 +22,7 @@ export class TeamMemberContorller {
                 })
             }
 
-            return res.status(200).json({ user })
+            return res.status(200).json(user)
 
         } catch (error) {
             return res.status(500).json({
@@ -29,6 +30,21 @@ export class TeamMemberContorller {
             })
         }
     }
+
+
+    static getProjectTeam = async (req: Request, res: Response) => {
+        try {
+            const { team } = await req.project.populate("team", "id name email")
+
+            return res.status(200).json(team)
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while getting the project's team"
+            })
+        }
+    }
+
 
     static addMemberById = async (req: Request, res: Response) => {
         try {

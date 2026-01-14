@@ -1,4 +1,4 @@
-import { Schema, Document, model, Types } from "mongoose"
+import { Schema, Document, model, Types, PopulatedDoc } from "mongoose"
 
 const taskStatus = {
     PENDING: "pending",
@@ -13,7 +13,7 @@ export type TaskStatus = typeof taskStatus[keyof typeof taskStatus]
 export interface ITask extends Document {
     name: string
     description: string
-    project: Types.ObjectId
+    project: PopulatedDoc<ITask & Document>
     status: TaskStatus
 }
 

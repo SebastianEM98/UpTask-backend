@@ -41,7 +41,6 @@ app.use("/api/projects", taskRoutes)
 app.use("/api/users", userRoutes)
 
 
-
 // CORS Error Handler Middleware
 app.use(corsErrorHandler)
 

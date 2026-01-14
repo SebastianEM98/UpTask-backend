@@ -1,8 +1,9 @@
-import { Schema, Document, model, Types } from "mongoose"
+import { Schema, Document, model, Types, PopulatedDoc } from "mongoose"
+import { IUser } from "./User"
 
 export interface IToken extends Document {
     token: string
-    user: Types.ObjectId
+    user: PopulatedDoc<IUser & Document>
     createdAt: string
 }
 

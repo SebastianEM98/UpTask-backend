@@ -3,6 +3,8 @@ import { ProjectContorller } from "../controllers/ProjectController"
 import { handleValidationErrors } from "../middlewares/validation"
 import { authenticate } from "../middlewares/auth"
 import { projectBodyValidationRules, projectIdValidationRule, updateProjectValidationRules } from "../helpers/projectValidator"
+import { userEmailValidationRules } from "../helpers/userValidator"
+import { TeamMemberContorller } from "../controllers/TeamController"
 
 const router = Router()
 
@@ -15,6 +17,9 @@ router.get('/', ProjectContorller.getAllProjects)
 router.get('/:id', projectIdValidationRule, handleValidationErrors, ProjectContorller.getProjectById)
 router.put('/:id', updateProjectValidationRules, handleValidationErrors, ProjectContorller.updateProject)
 router.delete('/:id', projectIdValidationRule, handleValidationErrors, ProjectContorller.deleteProject)
+
+// Routes for Project Members
+router.post('/:projectId/team/search', userEmailValidationRules, handleValidationErrors, TeamMemberContorller.findMemberByEmail)
 
 
 export default router

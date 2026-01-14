@@ -30,3 +30,7 @@ export const userLoginValidationRules = [
 
     body('password').notEmpty().withMessage('The Password is Required')
 ]
+
+export const userIdBodyValidationRule = [
+    body('id').isMongoId().withMessage('Invalid User ID')
+]

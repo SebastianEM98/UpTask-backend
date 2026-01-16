@@ -1,4 +1,4 @@
-import { body } from "express-validator"
+import { body, param } from "express-validator"
 
 export const userEmailValidationRules = [
     body('email').notEmpty().withMessage('The Email is Required'),
@@ -33,4 +33,8 @@ export const userLoginValidationRules = [
 
 export const userIdBodyValidationRule = [
     body('id').isMongoId().withMessage('Invalid User ID')
+]
+
+export const userIdParamValidationRule = [
+    param('userId').isMongoId().withMessage('Invalid User ID')
 ]

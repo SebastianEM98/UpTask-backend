@@ -87,23 +87,23 @@ export class TeamMemberContorller {
 
     static RemoveMemberById = async (req: Request, res: Response) => {
         try {
-            const { id } = req.body
+            const { userId } = req.params
 
             // Find User
             const user = await User.findOne({
                 $and: [
-                    { _id: id },
+                    { _id: userId },
                     { _id: { $ne: req.user._id } }
                 ]
             }).select('_id')
 
-            if (!user || !req.project.team.includes(id)) {
+            if (!user || !req.project.team.some(member => member.toString() === userId)) {
                 return res.status(404).json({
                     message: "Team Member Not Found"
                 })
             }
 
-            req.project.team = req.project.team.filter(teamMember => teamMember._id.toString() !== id)
+            req.project.team = req.project.team.filter(teamMember => teamMember._id.toString() !== userId)
 
             await req.project.save()
 

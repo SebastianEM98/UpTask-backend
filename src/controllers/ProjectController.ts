@@ -26,7 +26,12 @@ export class ProjectContorller {
 
     static getAllProjects = async (req: Request, res: Response) => {
         try {
-            const projects = await Project.find({ manager: req.user._id })
+            const projects = await Project.find({
+                $or: [
+                    { manager: req.user._id },
+                    { team: { $in: [req.user._id] } }
+                ]
+            })
 
             return res.status(200).json(projects)
 
@@ -49,7 +54,7 @@ export class ProjectContorller {
                 })
             }
 
-            if (project.manager.toString() !== req.user._id.toString()) {
+            if (project.manager.toString() !== req.user._id.toString() && !project.team.includes(req.user._id)) {
                 return res.status(401).json({
                     message: "Insufficient Permissions"
                 })

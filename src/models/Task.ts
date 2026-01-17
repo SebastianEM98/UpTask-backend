@@ -1,4 +1,5 @@
 import { Schema, Document, model, Types, PopulatedDoc } from "mongoose"
+import { IUser } from "./User"
 
 const taskStatus = {
     PENDING: "pending",
@@ -15,6 +16,7 @@ export interface ITask extends Document {
     description: string
     project: PopulatedDoc<ITask & Document>
     status: TaskStatus
+    completedBy: PopulatedDoc<IUser & Document>
 }
 
 export const TaskSchema: Schema = new Schema({
@@ -37,7 +39,12 @@ export const TaskSchema: Schema = new Schema({
         type: String,
         enum: Object.values(taskStatus),
         default: taskStatus.PENDING
-    }
+    },
+    completedBy: {
+        type: Types.ObjectId,
+        ref: "User",
+        default: null
+    },
 }, { timestamps: true })
 
 // Hides the __v in responses (remains on database)

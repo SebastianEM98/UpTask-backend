@@ -37,7 +37,9 @@ export class TaskController {
 
     static getTasksById = async (req: Request, res: Response) => {
         try {
-            return res.status(200).json(req.task)
+            const task = await req.task.populate("completedBy", "_id name email")
+
+            return res.status(200).json(task)
         } catch (error) {
             return res.status(500).json({
                 message: "An error occurred while getting the task"

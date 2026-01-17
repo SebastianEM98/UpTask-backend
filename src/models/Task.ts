@@ -16,7 +16,10 @@ export interface ITask extends Document {
     description: string
     project: PopulatedDoc<ITask & Document>
     status: TaskStatus
-    completedBy: PopulatedDoc<IUser & Document>
+    statusUpdatedBy: {
+        user: PopulatedDoc<IUser & Document>
+        status: TaskStatus
+    }[]
 }
 
 export const TaskSchema: Schema = new Schema({
@@ -40,11 +43,20 @@ export const TaskSchema: Schema = new Schema({
         enum: Object.values(taskStatus),
         default: taskStatus.PENDING
     },
-    completedBy: {
-        type: Types.ObjectId,
-        ref: "User",
-        default: null
-    },
+    statusUpdatedBy: [
+        {
+            user: {
+                type: Types.ObjectId,
+                ref: "User",
+                default: null
+            },
+            status: {
+                type: String,
+                enum: Object.values(taskStatus),
+                default: taskStatus.PENDING
+            }
+        }
+    ],
 }, { timestamps: true })
 
 // Hides the __v in responses (remains on database)

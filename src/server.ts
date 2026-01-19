@@ -4,10 +4,11 @@ import cors from "cors"
 import morgan from "morgan"
 import { dbConnection } from "./config/dbConnection"
 import { corsOptions } from "./config/cors"
+import userRoutes from "./routes/userRoutes"
 import projectRoutes from "./routes/projectRoutes"
 import taskRoutes from "./routes/taskRoutes"
+import commentRoutes from "./routes/commentRoutes"
 import teamMemberRoutes from "./routes/teamMemberRoutes"
-import userRoutes from "./routes/userRoutes"
 import { corsErrorHandler } from "./middlewares/corsErrorHandler"
 
 
@@ -40,6 +41,7 @@ app.use(morgan('dev'))
 app.use("/api/projects", projectRoutes)
 app.use("/api/projects", taskRoutes)
 app.use("/api/projects", teamMemberRoutes)
+app.use("/api/projects", commentRoutes)
 app.use("/api/users", userRoutes)
 
 

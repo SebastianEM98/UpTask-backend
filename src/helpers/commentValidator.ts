@@ -9,3 +9,8 @@ export const createCommentValidationRules = [
     ...IdsParamsValidationRules,
     ...commentBodyValidationRules
 ]
+
+export const deleteCommentValidationRules = [
+    ...IdsParamsValidationRules,
+    param('commentId').isMongoId().withMessage('Invalid Comment ID')
+]

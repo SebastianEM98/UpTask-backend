@@ -34,7 +34,7 @@ export class CommentController {
 
     static getTaskComments = async (req: Request, res: Response) => {
         try {
-            const comments = await Comment.find({ task: req.task._id }).populate("createdBy", "_id name email")
+            const comments = await Comment.find({ task: req.task._id }).populate("createdBy", "_id name email").sort({ createdAt: -1 })
 
             return res.status(200).json(comments)
 

@@ -225,7 +225,7 @@ export class UserContorller {
             const isSamePassword = await checkPassword(password, user.password)
 
             if (isSamePassword) {
-                return res.status(401).json({
+                return res.status(409).json({
                     message: "The new password cannot be the same as the previous one"
                 })
             }
@@ -263,7 +263,7 @@ export class UserContorller {
             })
 
             if (userExists) {
-                return res.status(401).json({
+                return res.status(409).json({
                     message: "This email is already associated with another account"
                 })
             }
@@ -279,6 +279,41 @@ export class UserContorller {
         } catch (error) {
             return res.status(500).json({
                 message: "An error occurred while updating the profile"
+            })
+        }
+    }
+
+
+    static updateCurrentUserPassword = async (req: Request, res: Response) => {
+        try {
+            const { current_password, password } = req.body
+
+            const user = await User.findById(req.user._id)
+
+            const isSamePassword = await checkPassword(current_password, user.password)
+
+            if (!isSamePassword) {
+                return res.status(409).json({
+                    message: "Incorrect Current Password"
+                })
+            }
+
+            if (current_password === password) {
+                return res.status(409).json({
+                    message: "The new password cannot be the same as the previous one"
+                })
+            }
+
+            user.password = await hashPassword(password)
+            await user.save()
+
+            return res.status(200).json({
+                message: "Password Successfully Updated"
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while updating the password"
             })
         }
     }

@@ -43,3 +43,8 @@ export const profileUpdateValidationRules = [
     body('name').notEmpty().withMessage('The Name is Required'),
     ...userEmailValidationRules
 ]
+
+export const profilePasswordValidationRules = [
+    body('current_password').notEmpty().withMessage('The Current Password is Required'),
+    ...userPasswordsValidationRules
+]

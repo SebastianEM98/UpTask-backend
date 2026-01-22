@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { UserContorller } from "../controllers/UserController"
-import { profileUpdateValidationRules, userEmailValidationRules, userLoginValidationRules, userPasswordsValidationRules, userRegisterValidationRules } from "../helpers/userValidator"
+import { profilePasswordValidationRules, profileUpdateValidationRules, userEmailValidationRules, userLoginValidationRules, userPasswordsValidationRules, userRegisterValidationRules } from "../helpers/userValidator"
 import { handleValidationErrors } from "../middlewares/validation"
 import { authenticate } from "../middlewares/auth"
 
@@ -18,6 +18,7 @@ router.get('/authenticated', authenticate, UserContorller.getAuthenticatedUser)
 
 // Profile Routes
 router.put('/profile', authenticate, profileUpdateValidationRules, handleValidationErrors, UserContorller.updateProfile)
+router.post('/update-password', authenticate, profilePasswordValidationRules, handleValidationErrors, UserContorller.updateCurrentUserPassword)
 
 
 

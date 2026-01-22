@@ -317,4 +317,24 @@ export class UserContorller {
             })
         }
     }
+
+
+    static verifyPassword = async (req: Request, res: Response) => {
+
+        const { password } = req.body
+
+        const user = await User.findById(req.user._id)
+
+        const isSamePassword = await checkPassword(password, user.password)
+
+        if (!isSamePassword) {
+            return res.status(409).json({
+                message: "Incorrect Password"
+            })
+        }
+
+        return res.status(200).json({
+            message: "Password Verified"
+        })
+    }
 }

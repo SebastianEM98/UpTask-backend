@@ -17,6 +17,10 @@ export const userPasswordsValidationRules = [
     })
 ]
 
+export const passwordValidationRule = [
+    body('password').notEmpty().withMessage('The Password is Required')
+]
+
 export const userRegisterValidationRules = [
     ...userEmailValidationRules,
 
@@ -27,8 +31,7 @@ export const userRegisterValidationRules = [
 
 export const userLoginValidationRules = [
     ...userEmailValidationRules,
-
-    body('password').notEmpty().withMessage('The Password is Required')
+    ...passwordValidationRule
 ]
 
 export const userIdBodyValidationRule = [

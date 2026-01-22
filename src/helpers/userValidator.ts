@@ -38,3 +38,8 @@ export const userIdBodyValidationRule = [
 export const userIdParamValidationRule = [
     param('userId').isMongoId().withMessage('Invalid User ID')
 ]
+
+export const profileUpdateValidationRules = [
+    body('name').notEmpty().withMessage('The Name is Required'),
+    ...userEmailValidationRules
+]

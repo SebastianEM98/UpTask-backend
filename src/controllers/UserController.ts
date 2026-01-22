@@ -234,7 +234,7 @@ export class UserContorller {
 
             await Promise.allSettled([user.save(), tokenExists.deleteOne()])
 
-            return res.status(201).json({
+            return res.status(200).json({
                 message: "Password Successfully Updated"
             })
 
@@ -248,5 +248,38 @@ export class UserContorller {
 
     static getAuthenticatedUser = async (req: Request, res: Response) => {
         return res.status(200).json(req.user)
+    }
+
+
+    static updateProfile = async (req: Request, res: Response) => {
+        try {
+            const { name, email } = req.body
+
+            const userExists = await User.findOne({
+                $and: [
+                    { email },
+                    { _id: { $ne: req.user._id } }
+                ]
+            })
+
+            if (userExists) {
+                return res.status(401).json({
+                    message: "This email is already associated with another account"
+                })
+            }
+
+            req.user.name = name
+            req.user.email = email
+            await req.user.save()
+
+            return res.status(200).json({
+                message: "Profile Successfully Updated"
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "An error occurred while updating the profile"
+            })
+        }
     }
 }

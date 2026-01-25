@@ -1,5 +1,6 @@
 import { Schema, Document, model, Types, PopulatedDoc } from "mongoose"
 import { IUser } from "./User"
+import Comment from "./Comment"
 
 const taskStatus = {
     PENDING: "pending",
@@ -62,6 +63,15 @@ export const TaskSchema: Schema = new Schema({
 // Hides the __v in responses (remains on database)
 TaskSchema.set("toJSON", { versionKey: false })
 TaskSchema.set("toObject", { versionKey: false })
+
+
+// Schema Middleware
+TaskSchema.pre('deleteOne', { document: true, query: false }, async function () {
+    const taskId = this._id
+    if (!taskId) return
+    await Comment.deleteMany({ task: taskId })
+})
+
 
 const Task = model<ITask>("Task", TaskSchema)
 export default Task

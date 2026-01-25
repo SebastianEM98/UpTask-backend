@@ -56,7 +56,7 @@ export class ProjectContorller {
 
             if (project.manager.toString() !== req.user._id.toString() && !project.team.includes(req.user._id)) {
                 return res.status(401).json({
-                    message: "Insufficient Permissions"
+                    message: "You don't have access to this project"
                 })
             }
 

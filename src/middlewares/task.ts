@@ -36,7 +36,7 @@ export const taskExists = async (req: Request, res: Response, next: NextFunction
 export const isManager = async (req: Request, res: Response, next: NextFunction) => {
     if (req.user._id.toString() !== req.project.manager.toString()) {
         return res.status(401).json({
-            message: "Insufficient Permissions - Not manager"
+            message: "Insufficient Permissions"
         })
     }
     next()

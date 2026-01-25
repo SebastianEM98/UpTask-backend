@@ -1,5 +1,5 @@
 import type { Request, Response } from "express"
-import Task from "../models/Task"
+import Task, { ITask } from "../models/Task"
 
 export class TaskController {
 
@@ -82,7 +82,7 @@ export class TaskController {
     }
 
 
-    static updateStatus = async (req: Request, res: Response) => {
+    static updateStatus = async (req: Request<{}, {}, ITask>, res: Response) => {
         try {
             const task = req.task
             const { status } = req.body

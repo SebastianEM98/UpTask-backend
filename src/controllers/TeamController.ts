@@ -1,10 +1,9 @@
 import type { Request, Response } from "express"
-import User from "../models/User"
-import Project from "../models/Project"
+import User, { IUser } from "../models/User"
 
 export class TeamMemberContorller {
 
-    static findMemberByEmail = async (req: Request, res: Response) => {
+    static findMemberByEmail = async (req: Request<{}, {}, IUser>, res: Response) => {
         try {
             const { email } = req.body
 

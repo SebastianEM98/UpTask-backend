@@ -1,13 +1,10 @@
 import { body, param } from "express-validator"
+import { projectIdValidationRule } from "./projectValidator"
 
 export const taskBodyValidationRules = [
     body('name').notEmpty().withMessage('The Task Name is Required'),
 
     body('description').notEmpty().withMessage('The Task Description is Required')
-]
-
-export const projectIdValidationRule = [
-    param('projectId').isMongoId().withMessage('Invalid Project ID')
 ]
 
 export const IdsParamsValidationRules = [

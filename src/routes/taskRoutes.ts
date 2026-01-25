@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { TaskController } from "../controllers/TaskController"
-import { createTaskValidationRules, projectIdValidationRule, IdsParamsValidationRules, updateTaskValidationRules, updateTaskStatusValidationRules } from "../helpers/taskValidator"
+import { projectIdValidationRule } from "../helpers/projectValidator"
+import { createTaskValidationRules, IdsParamsValidationRules, updateTaskValidationRules, updateTaskStatusValidationRules } from "../helpers/taskValidator"
 import { handleValidationErrors } from "../middlewares/validation"
 import { projectExists } from "../middlewares/projectExists"
 import { isManager, taskExists } from "../middlewares/task"

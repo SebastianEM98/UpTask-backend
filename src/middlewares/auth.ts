@@ -23,7 +23,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     const token = bearer.split(' ')[1]
 
     try {
-        const payloadDecoded = jwt.verify(token, process.env.JWRT_SECRET)
+        const payloadDecoded = jwt.verify(token, process.env.JWT_SECRET)
         
         if(typeof payloadDecoded === 'object' && payloadDecoded.id) {
             const user = await User.findById(payloadDecoded.id).select('_id name email')

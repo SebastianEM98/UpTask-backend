@@ -6,7 +6,7 @@ It provides authentication, role-based access control, and project/task manageme
 This API is designed to work with the UpTask frontend built in React + TypeScript.
 
 
-🔗 Related Repositories
+## 🔗 Related Repositories
 
 Frontend: https://github.com/SebastianEM98/UpTask-frontend
 

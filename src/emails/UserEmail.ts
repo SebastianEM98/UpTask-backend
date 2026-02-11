@@ -1,4 +1,6 @@
-import { transporter } from "../config/nodemailer"
+// import { transporter } from "../config/nodemailer"
+import { resend } from "../config/resend"
+import colors from "colors"
 
 interface IEmail {
     email: string
@@ -40,26 +42,48 @@ export class UserEmail {
     static sendConfirmationEmail = async (user: IEmail) => {
         const template = EMAIL_TEMPLATES.CONFIRM_ACCOUNT
 
-        await transporter.sendMail({
-            from: 'UpTask <admin@uptask.com>',
+        const { error } = await resend.emails.send({
+            from: "UpTask <onboarding@resend.dev>",
             to: user.email,
             subject: "Confirm Your Account - UpTask",
-            text: `Hello ${user.name}, please confirm your account by clicking the following link`,
             html: setHTMLTemplate(template, user)
         })
+
+        if (error) {
+            console.error(colors.magenta.bold("Email Error:\n" + error))
+        }
+
+        // await transporter.sendMail({
+        //     from: 'UpTask <admin@uptask.com>',
+        //     to: user.email,
+        //     subject: "Confirm Your Account - UpTask",
+        //     text: `Hello ${user.name}, please confirm your account by clicking the following link`,
+        //     html: setHTMLTemplate(template, user)
+        // })
     }
 
 
     static sendPasswordResetEmail = async (user: IEmail) => {
         const template = EMAIL_TEMPLATES.RESET_PASSWORD
 
-        await transporter.sendMail({
-            from: 'UpTask <admin@uptask.com>',
+        const { error } = await resend.emails.send({
+            from: "UpTask <onboarding@resend.dev>",
             to: user.email,
             subject: "Reset Password - UpTask",
-            text: `Hello ${user.name}, you can reset your password by clicking on the following link`,
             html: setHTMLTemplate(template, user)
         })
+
+        if (error) {
+            console.error(colors.magenta.bold("Email Error:\n" + error))
+        }
+
+        // await transporter.sendMail({
+        //     from: 'UpTask <admin@uptask.com>',
+        //     to: user.email,
+        //     subject: "Reset Password - UpTask",
+        //     text: `Hello ${user.name}, you can reset your password by clicking on the following link`,
+        //     html: setHTMLTemplate(template, user)
+        // })
     }
 }
 

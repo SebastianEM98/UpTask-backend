@@ -32,7 +32,7 @@ Frontend: https://github.com/SebastianEM98/UpTask-frontend
 - **Mongoose**  
 - **JWT** (authentication)  
 - **bcrypt** (password hashing)  
-- **Nodemailer** (email verification & password recovery)
+- **Resend** (email verification & password recovery)
 - **dotenv** (environment variables)  
 - **cors**  
 - **nodemon** (development)  
@@ -62,6 +62,7 @@ Add the following:
 NODE_ENV=development
 DATABASE_URL=your_mongodb_connection
 FRONTEND_URL=http://localhost:5173
+RESEND_API_KEY=re_xxxxxxxxx
 JWT_SECRET=your_jwt_secret
 ```
 

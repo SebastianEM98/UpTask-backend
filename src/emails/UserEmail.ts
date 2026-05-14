@@ -43,7 +43,7 @@ export class UserEmail {
         const template = EMAIL_TEMPLATES.CONFIRM_ACCOUNT
 
         const { error } = await resend.emails.send({
-            from: "UpTask <onboarding@resend.dev>",
+            from: "UpTask <sebastianecheverri.dev@gmail.com>",
             to: user.email,
             subject: "Confirm Your Account - UpTask",
             html: setHTMLTemplate(template, user)
@@ -67,7 +67,7 @@ export class UserEmail {
         const template = EMAIL_TEMPLATES.RESET_PASSWORD
 
         const { error } = await resend.emails.send({
-            from: "UpTask <onboarding@resend.dev>",
+            from: "UpTask <sebastianecheverri.dev@gmail.com>",
             to: user.email,
             subject: "Reset Password - UpTask",
             html: setHTMLTemplate(template, user)
